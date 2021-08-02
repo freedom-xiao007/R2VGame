@@ -17,15 +17,20 @@
 
 package com.game.tower.battle.desktop;
 
-import com.almasb.fxgl.dsl.components.RandomMoveComponent;
+import com.almasb.fxgl.dsl.components.*;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
+import com.almasb.fxgl.entity.components.TimeComponent;
+import com.almasb.fxgl.particle.ParticleComponent;
+import com.almasb.fxgl.particle.ParticleEmitters;
+import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
 import static com.almasb.fxgl.dsl.FXGL.getAppWidth;
@@ -46,10 +51,19 @@ public class GameEntityFactory implements EntityFactory {
 
     @Spawns(value = "enemy")
     public Entity createEnemy(final SpawnData data) {
+        var emitter = ParticleEmitters.newExplosionEmitter(350);
+        emitter.setMaxEmissions(1);
+        emitter.setSize(2, 10);
+        emitter.setStartColor(Color.WHITE);
+        emitter.setEndColor(Color.BLUE);
+        emitter.setSpawnPointFunction(i -> new Point2D(64, 64));
+
         return entityBuilder()
                 .type(EntityTypeEnum.ENEMY)
                 .viewWithBBox("slime.png")
                 .with(new RandomMoveComponent(new Rectangle2D(0, 0, getAppWidth(), getAppHeight()), 100))
+//                .with(new ExpireCleanComponent(Duration.seconds(0.66)))
+                .with(new ParticleComponent(emitter))
                 .collidable()
                 .build();
     }
@@ -59,17 +73,25 @@ public class GameEntityFactory implements EntityFactory {
         return entityBuilder()
                 .type(EntityTypeEnum.SOLDIER)
                 .viewWithBBox("sword-wound.png")
-                .with(new RandomMoveComponent(new Rectangle2D(0, 0, getAppWidth(), getAppHeight()), 100))
+//                .with(new RandomMoveComponent(new Rectangle2D(0, 0, getAppWidth(), getAppHeight()), 100))
+                .with(new SoldierComponent())
                 .collidable()
                 .build();
     }
 
     @Spawns(value = "lineBulletOfSolider")
     public Entity createLineBulletOfSolider(final SpawnData data) {
+        Point2D dir = data.get("dir");
+
+        var effectComponent = new EffectComponent();
+
         return entityBuilder()
                 .type(EntityTypeEnum.BULLET_SOLDIER)
                 .viewWithBBox(new Rectangle(1, 15, Color.GRAY))
-                .with(new RandomMoveComponent(new Rectangle2D(0, 0, getAppWidth(), getAppHeight()), 100))
+                .with(new ProjectileComponent(dir, 500))
+                .with(new OffscreenCleanComponent())
+                .with(new TimeComponent())
+                .with(effectComponent)
                 .collidable()
                 .build();
     }

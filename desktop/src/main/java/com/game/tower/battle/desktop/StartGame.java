@@ -22,6 +22,7 @@ import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
+import javafx.geometry.Point2D;
 import javafx.util.Duration;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -35,31 +36,36 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 @Component
 public class StartGame extends GameApplication implements ApplicationRunner {
 
+    private Entity solider;
+
     @Override
     public void run(ApplicationArguments args) throws Exception {
         launch(new String[]{});
     }
 
     @Override
-    protected void initSettings(GameSettings gameSettings) {
-        gameSettings.setWidth(500);
-        gameSettings.setHeight(750);
-        gameSettings.setTitle("Basic Game App");
+    protected void initSettings(GameSettings settings) {
+        settings.setWidth(500);
+        settings.setHeight(750);
+        settings.setTitle("Basic Game App");
+        settings.setTitle("Asteroids");
+        settings.setVersion("0.1");
+        settings.setMainMenuEnabled(false);
     }
 
     @Override
     protected void initGame() {
+        getSettings().setGlobalSoundVolume(0.1);
+
         getGameWorld().addEntityFactory(new GameEntityFactory());
         spawn("background");
-        spawn("enemy", getAppHeight(), getAppWidth());
-        spawn("soldier", getAppHeight(), getAppWidth());
-        spawn("lineBulletOfSolider", getAppHeight(), getAppWidth());
-        spawn("ballBulletOfSolider", getAppHeight(), getAppWidth());
+        solider = spawn("soldier", -100.0 , -100.0);
 
         com.almasb.fxgl.dsl.FXGL.run(() -> {
-            Entity e = getGameWorld().create("enemy", new SpawnData(100, 100));
+            Entity enemy = getGameWorld().create("enemy", new SpawnData(100, 100));
+            spawnWithScale(enemy, Duration.seconds(0.75), Interpolators.BOUNCE.EASE_OUT());
 
-            spawnWithScale(e, Duration.seconds(0.75), Interpolators.BOUNCE.EASE_OUT());
+            solider.getComponent(SoldierComponent.class).attack();
         }, Duration.seconds(2));
     }
 
