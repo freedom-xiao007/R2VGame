@@ -44,7 +44,7 @@ public class GameEntityFactory implements EntityFactory {
 
     @Spawns(value = "background")
     public Entity createFloor(final SpawnData data) {
-        return entityBuilder()
+        return entityBuilder(data)
                 .view(new Rectangle(getAppWidth(), getAppHeight()))
                 .build();
     }
@@ -58,7 +58,7 @@ public class GameEntityFactory implements EntityFactory {
         emitter.setEndColor(Color.BLUE);
         emitter.setSpawnPointFunction(i -> new Point2D(64, 64));
 
-        return entityBuilder()
+        return entityBuilder(data)
                 .type(EntityTypeEnum.ENEMY)
                 .viewWithBBox("slime.png")
                 .with(new RandomMoveComponent(new Rectangle2D(0, 0, getAppWidth(), getAppHeight()), 100))
@@ -70,7 +70,7 @@ public class GameEntityFactory implements EntityFactory {
 
     @Spawns(value = "soldier")
     public Entity createSoldier(final SpawnData data) {
-        return entityBuilder()
+        return entityBuilder(data)
                 .type(EntityTypeEnum.SOLDIER)
                 .viewWithBBox("sword-wound.png")
 //                .with(new RandomMoveComponent(new Rectangle2D(0, 0, getAppWidth(), getAppHeight()), 100))
@@ -85,7 +85,7 @@ public class GameEntityFactory implements EntityFactory {
 
         var effectComponent = new EffectComponent();
 
-        return entityBuilder()
+        return entityBuilder(data)
                 .type(EntityTypeEnum.BULLET_SOLDIER)
                 .viewWithBBox(new Rectangle(1, 15, Color.GRAY))
                 .with(new ProjectileComponent(dir, 500))
@@ -98,7 +98,7 @@ public class GameEntityFactory implements EntityFactory {
 
     @Spawns(value = "ballBulletOfSolider")
     public Entity createBallBulletOfSolider(final SpawnData data) {
-        return entityBuilder()
+        return entityBuilder(data)
                 .type(EntityTypeEnum.BULLET_SOLDIER)
                 .viewWithBBox(new Circle(5, 5, 5, Color.BLUEVIOLET))
                 .with(new RandomMoveComponent(new Rectangle2D(0, 0, getAppWidth(), getAppHeight()), 100))

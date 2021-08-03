@@ -59,7 +59,7 @@ public class StartGame extends GameApplication implements ApplicationRunner {
 
         getGameWorld().addEntityFactory(new GameEntityFactory());
         spawn("background");
-        solider = spawn("soldier", -100.0 , -100.0);
+        solider = spawn("soldier", getAppWidth() / 2 , getAppHeight() / 2);
 
         com.almasb.fxgl.dsl.FXGL.run(() -> {
             Entity enemy = getGameWorld().create("enemy", new SpawnData(100, 100));
