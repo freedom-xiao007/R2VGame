@@ -22,6 +22,7 @@ import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.EntityFactory;
 import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
+import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.entity.components.TimeComponent;
 import com.almasb.fxgl.particle.ParticleComponent;
 import com.almasb.fxgl.particle.ParticleEmitters;
@@ -49,22 +50,13 @@ public class GameEntityFactory implements EntityFactory {
                 .build();
     }
 
-    @Spawns(value = "enemy")
+    @Spawns(value = "Enemy")
     public Entity createEnemy(final SpawnData data) {
-        var emitter = ParticleEmitters.newExplosionEmitter(350);
-        emitter.setMaxEmissions(1);
-        emitter.setSize(2, 10);
-        emitter.setStartColor(Color.WHITE);
-        emitter.setEndColor(Color.BLUE);
-        emitter.setSpawnPointFunction(i -> new Point2D(64, 64));
-
         return entityBuilder(data)
                 .type(EntityTypeEnum.ENEMY)
                 .viewWithBBox("slime.png")
-                .with(new RandomMoveComponent(new Rectangle2D(0, 0, getAppWidth(), getAppHeight()), 100))
-//                .with(new ExpireCleanComponent(Duration.seconds(0.66)))
-                .with(new ParticleComponent(emitter))
-                .collidable()
+                .with(new CollidableComponent(true))
+                .with(new EnemyComponent())
                 .build();
     }
 
@@ -76,6 +68,29 @@ public class GameEntityFactory implements EntityFactory {
 //                .with(new RandomMoveComponent(new Rectangle2D(0, 0, getAppWidth(), getAppHeight()), 100))
                 .with(new SoldierComponent())
                 .collidable()
+                .build();
+    }
+
+    @Spawns(value = "Tower")
+    public Entity createTower(final SpawnData data) {
+        final String tower = data.get("tower");
+        return entityBuilder(data)
+                .type(EntityTypeEnum.SOLDIER)
+                .viewWithBBox(tower)
+//                .with(new RandomMoveComponent(new Rectangle2D(0, 0, getAppWidth(), getAppHeight()), 100))
+                .with(new SoldierComponent())
+                .collidable()
+                .build();
+    }
+
+    @Spawns(value = "BulletOfTower")
+    public Entity createBulletOfTower(final SpawnData data) {
+        final String bullet = data.get("texturesPath");
+        return entityBuilder(data)
+                .type(EntityTypeEnum.BULLET_SOLDIER)
+                .viewWithBBox(bullet)
+                .with(new CollidableComponent(true))
+                .with(new OffscreenCleanComponent())
                 .build();
     }
 
