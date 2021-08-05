@@ -68,12 +68,13 @@ public class StartGame extends GameApplication implements ApplicationRunner {
 
     @Override
     protected void initSettings(GameSettings settings) {
-        settings.setWidth(500);
-        settings.setHeight(750);
-        settings.setTitle("Basic Game App");
-        settings.setTitle("Asteroids");
-        settings.setVersion("0.1");
-        settings.setMainMenuEnabled(false);
+        settings.setTitle("Tower Defense");
+        settings.setVersion("0.2");
+        settings.setWidth(800);
+        settings.setHeight(600);
+        settings.setIntroEnabled(false);
+        settings.setProfilingEnabled(false);
+        settings.setCloseConfirmation(false);
         settings.setApplicationMode(ApplicationMode.DEVELOPER);
     }
 

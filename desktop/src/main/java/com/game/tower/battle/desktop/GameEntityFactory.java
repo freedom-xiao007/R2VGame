@@ -78,7 +78,7 @@ public class GameEntityFactory implements EntityFactory {
                 .type(EntityTypeEnum.SOLDIER)
                 .viewWithBBox(tower)
 //                .with(new RandomMoveComponent(new Rectangle2D(0, 0, getAppWidth(), getAppHeight()), 100))
-                .with(new SoldierComponent())
+                .with(new TowerComponent())
                 .collidable()
                 .build();
     }

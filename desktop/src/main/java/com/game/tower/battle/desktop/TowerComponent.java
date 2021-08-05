@@ -57,7 +57,7 @@ public class TowerComponent extends Component {
 
         Point2D direction = enemy.getPosition().subtract(position);
 
-        Entity bullet = FXGL.spawn("BulletOfTower", new SpawnData(direction).put("texturesPath", "arrow_attack.png"));
+        Entity bullet = FXGL.spawn("BulletOfTower", new SpawnData(position).put("texturesPath", "arrow_attack.png"));
         bullet.addComponent(new ProjectileComponent(direction, 5 * 60));
     }
 }
