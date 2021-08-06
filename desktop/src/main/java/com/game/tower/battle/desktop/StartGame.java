@@ -17,7 +17,6 @@
 
 package com.game.tower.battle.desktop;
 
-import com.almasb.fxgl.animation.Interpolators;
 import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
@@ -51,7 +50,6 @@ import static com.almasb.fxgl.dsl.FXGL.*;
 @Component
 public class StartGame extends GameApplication implements ApplicationRunner {
 
-    private Entity solider;
     private int levelEnemies = 10;
     private Point2D enemySpawnPoint = new Point2D(50, 0);
 
@@ -70,8 +68,8 @@ public class StartGame extends GameApplication implements ApplicationRunner {
     protected void initSettings(GameSettings settings) {
         settings.setTitle("Tower Defense");
         settings.setVersion("0.2");
-        settings.setWidth(800);
-        settings.setHeight(600);
+        settings.setWidth(500);
+        settings.setHeight(750);
         settings.setIntroEnabled(false);
         settings.setProfilingEnabled(false);
         settings.setCloseConfirmation(false);
