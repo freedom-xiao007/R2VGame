@@ -15,8 +15,9 @@
  * limitations under the License.
  */
 
-package com.game.tower.battle.desktop;
+package com.game.tower.battle.desktop.gameMap;
 
+import com.game.tower.battle.desktop.entity.EntityTypeEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,22 +28,22 @@ import java.util.concurrent.ConcurrentMap;
  * 游戏地图
  * @author liuwei
  */
-public class GameMap {
+public abstract class BaseGameMap {
 
-    private final static Logger log = LoggerFactory.getLogger(GameMap.class);
+    private final static Logger log = LoggerFactory.getLogger(BaseGameMap.class);
 
-    private final int unitWidth;
-    private final int unitHeight;
-    private final ConcurrentMap<String, EntityTypeEnum> gameMap = new ConcurrentHashMap<>();
+    protected final int unitWidth;
+    protected final int unitHeight;
+    protected final ConcurrentMap<String, EntityTypeEnum> gameMap = new ConcurrentHashMap<>();
 
-    public GameMap(final int unitWidth, final int unitHeight) {
+    public BaseGameMap(final int unitWidth, final int unitHeight) {
         this.unitWidth = unitWidth;
         this.unitHeight = unitHeight;
     }
 
     public EntityTypeEnum getEntity(final int x, final int y) {
         final String position = getMapPosition(x, y);
-        log.info(String.format("get entity: %s", position));
+        log.debug(String.format("get entity: %s", position));
         return gameMap.getOrDefault(position, null);
     }
 
@@ -51,18 +52,18 @@ public class GameMap {
         if (gameMap.containsKey(position)) {
             return false;
         }
-        log.info(String.format("put entity: %s", position));
+        log.debug(String.format("put entity: %s", position));
         gameMap.put(position, entityType);
         return true;
     }
 
     public void destroyEntity(final int x, final int y) {
         final String position = getMapPosition(x, y);
-        log.info(String.format("destroy entity: %s", position));
+        log.debug(String.format("destroy entity: %s", position));
         gameMap.remove(position);
     }
 
-    private String getMapPosition(final int x, final int y) {
+    protected String getMapPosition(final int x, final int y) {
         return x / unitWidth + "::" + y / unitHeight;
     }
 }

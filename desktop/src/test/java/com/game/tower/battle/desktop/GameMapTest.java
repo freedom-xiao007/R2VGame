@@ -17,6 +17,10 @@
 
 package com.game.tower.battle.desktop;
 
+import com.game.tower.battle.desktop.entity.EntityTypeEnum;
+import com.game.tower.battle.desktop.gameMap.BaseGameMap;
+import com.game.tower.battle.desktop.gameMap.GameMapConfig;
+import com.game.tower.battle.desktop.gameMap.GameMapManage;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,13 +30,16 @@ import org.junit.jupiter.api.Test;
  */
 public class GameMapTest {
 
-    private GameMap gameMap;
+    private BaseGameMap gameMap;
 
     @BeforeEach
     public void init() {
-        int unitWidth = 30;
-        int unitHeight = 30;
-        this.gameMap = new GameMap(unitWidth, unitHeight);
+        final GameMapConfig config = new GameMapConfig();
+        config.setWidth(100);
+        config.setHeight(100);
+        config.setUnitWidth(30);
+        config.setUnitHeight(30);
+        this.gameMap = new GameMapManage(config);
     }
 
     @Test

@@ -21,10 +21,19 @@ import com.almasb.fxgl.app.ApplicationMode;
 import com.almasb.fxgl.app.GameApplication;
 import com.almasb.fxgl.app.GameSettings;
 import com.almasb.fxgl.app.scene.GameView;
+import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.Entity;
 import com.almasb.fxgl.entity.SpawnData;
+import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.input.Input;
 import com.almasb.fxgl.input.UserAction;
+import com.game.tower.battle.desktop.entity.EntityTypeEnum;
+import com.game.tower.battle.desktop.entity.enemy.EnemyKilledEvent;
+import com.game.tower.battle.desktop.entity.enemy.EnemyReachedGoalEvent;
+import com.game.tower.battle.desktop.entity.GameEntityFactory;
+import com.game.tower.battle.desktop.gameMap.BaseGameMap;
+import com.game.tower.battle.desktop.gameMap.GameMapConfig;
+import com.game.tower.battle.desktop.gameMap.GameMapManage;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Point2D;
@@ -33,9 +42,13 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -49,6 +62,10 @@ import static com.almasb.fxgl.dsl.FXGL.*;
  */
 @Component
 public class StartGame extends GameApplication implements ApplicationRunner {
+
+    private GameMapConfig config;
+    private final int width = 500;
+    private final int height = 750;
 
     private int levelEnemies = 10;
     private Point2D enemySpawnPoint = new Point2D(50, 0);
@@ -68,8 +85,8 @@ public class StartGame extends GameApplication implements ApplicationRunner {
     protected void initSettings(GameSettings settings) {
         settings.setTitle("Tower Defense");
         settings.setVersion("0.2");
-        settings.setWidth(500);
-        settings.setHeight(750);
+        settings.setWidth(width);
+        settings.setHeight(height);
         settings.setIntroEnabled(false);
         settings.setProfilingEnabled(false);
         settings.setCloseConfirmation(false);
@@ -85,7 +102,19 @@ public class StartGame extends GameApplication implements ApplicationRunner {
     protected void initGame() {
         getGameWorld().addEntityFactory(new GameEntityFactory());
 
-        spawn("background");
+        FXGL.spawn("background");
+
+        config = new GameMapConfig();
+        config.setWidth(width);
+        config.setHeight(height);
+        config.setUnitHeight(30);
+        config.setUnitWidth(30);
+        for (int i = 1; i < config.getHeight() / config.getUnitHeight() + 1; i++) {
+            FXGL.spawn("HorizontalLine", 0, i * config.getUnitHeight());
+        }
+        for (int i = 1; i < config.getWidth() / config.getUnitWidth() + 1; i++) {
+            FXGL.spawn("VerticalLine", i * config.getUnitWidth(), 0);
+        }
 
         // TODO: read this from external level data
         waypoints.addAll(Arrays.asList(

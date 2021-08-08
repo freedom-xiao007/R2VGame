@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.game.tower.battle.desktop;
+package com.game.tower.battle.desktop.entity;
 
 import com.almasb.fxgl.dsl.components.*;
 import com.almasb.fxgl.entity.Entity;
@@ -24,14 +24,15 @@ import com.almasb.fxgl.entity.SpawnData;
 import com.almasb.fxgl.entity.Spawns;
 import com.almasb.fxgl.entity.components.CollidableComponent;
 import com.almasb.fxgl.entity.components.TimeComponent;
-import com.almasb.fxgl.particle.ParticleComponent;
-import com.almasb.fxgl.particle.ParticleEmitters;
+import com.game.tower.battle.desktop.entity.enemy.EnemyComponent;
+import com.game.tower.battle.desktop.entity.tower.SoldierComponent;
+import com.game.tower.battle.desktop.entity.tower.TowerComponent;
+import com.game.tower.battle.desktop.entity.EntityTypeEnum;
 import javafx.geometry.Point2D;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.util.Duration;
 
 import static com.almasb.fxgl.dsl.FXGL.getAppHeight;
 import static com.almasb.fxgl.dsl.FXGL.getAppWidth;
@@ -47,6 +48,20 @@ public class GameEntityFactory implements EntityFactory {
     public Entity createFloor(final SpawnData data) {
         return entityBuilder(data)
                 .view(new Rectangle(getAppWidth(), getAppHeight()))
+                .build();
+    }
+
+    @Spawns(value = "HorizontalLine")
+    public Entity createHorizontalLine(final SpawnData data) {
+        return entityBuilder(data)
+                .view(new Rectangle(getAppWidth(), 3, Color.WHITE))
+                .build();
+    }
+
+    @Spawns(value = "VerticalLine")
+    public Entity createVerticalLine(final SpawnData data) {
+        return entityBuilder(data)
+                .view(new Rectangle(3, getAppHeight(), Color.WHITE))
                 .build();
     }
 

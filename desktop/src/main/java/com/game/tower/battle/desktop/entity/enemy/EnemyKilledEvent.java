@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package com.game.tower.battle.desktop;
+package com.game.tower.battle.desktop.entity.enemy;
 
 import com.almasb.fxgl.entity.Entity;
 import javafx.event.Event;

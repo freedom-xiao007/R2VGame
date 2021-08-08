@@ -15,10 +15,11 @@
  * limitations under the License.
  */
 
-package com.game.tower.battle.desktop;
+package com.game.tower.battle.desktop.entity.enemy;
 
 import com.almasb.fxgl.dsl.FXGL;
 import com.almasb.fxgl.entity.component.Component;
+import com.game.tower.battle.desktop.StartGame;
 import javafx.geometry.Point2D;
 
 import java.util.List;

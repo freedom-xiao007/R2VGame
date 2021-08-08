@@ -15,11 +15,25 @@
  * limitations under the License.
  */
 
-package com.game.tower.battle.desktop;
+package com.game.tower.battle.desktop.entity.tower;
+
+import com.almasb.fxgl.core.math.Vec2;
+import com.almasb.fxgl.entity.SpawnData;
+import com.almasb.fxgl.entity.component.Component;
+import javafx.geometry.Point2D;
+
+import static com.almasb.fxgl.dsl.FXGL.spawn;
 
 /**
  * @author liuwei
  */
-public enum EntityTypeEnum {
-    ENEMY, BULLET_ENEMY, BULLET_SOLDIER, SOLDIER
+public class SoldierComponent extends Component {
+
+    public void attack() {
+        Point2D center = entity.getCenter().subtract(37/2.0, 13/2.0);
+
+        Vec2 dir = Vec2.fromAngle(entity.getRotation() - 90);
+
+        spawn("lineBulletOfSolider", new SpawnData(center.getX(), center.getY()).put("dir", dir.toPoint2D()));
+    }
 }
