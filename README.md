@@ -10,5 +10,9 @@
 收到自己平时打卡、喜欢塔防游戏的感受，想将平时的学习、锻炼身体等打卡与游戏结合起来，于是有了这个项目
 
 ## 相关资源
+### 教程
 - [游戏引擎：FXGL](https://github.com/AlmasB/FXGL/wiki/FXGL-11)
+
+### 素材
 - [游戏素材库](https://game-icons.net/)
+- [game-assets](https://itch.io/game-assets/tag-2d)

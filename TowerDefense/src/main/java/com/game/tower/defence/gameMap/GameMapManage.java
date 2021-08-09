@@ -33,22 +33,20 @@ public class GameMapManage extends BaseGameMap {
 
     private final int width;
     private final int height;
-    private final GameMapConfig config;
 
     public GameMapManage(final GameMapConfig config) {
         super(config.getUnitWidth(), config.getUnitHeight());
         this.width = config.getWidth();
         this.height = config.getHeight();
-        this.config = config;
     }
 
     public void init() {
         FXGL.spawn("background");
-        for (int i = 1; i < config.getHeight() / config.getUnitHeight() + 1; i++) {
-            FXGL.spawn("HorizontalLine", 0, i * config.getUnitHeight());
+        for (int i = 1; i < height / unitHeight + 1; i++) {
+            FXGL.spawn("HorizontalLine", 0, i * unitHeight);
         }
-        for (int i = 1; i < config.getWidth() / config.getUnitWidth() + 1; i++) {
-            FXGL.spawn("VerticalLine", i * config.getUnitWidth(), 0);
+        for (int i = 1; i < width / unitWidth + 1; i++) {
+            FXGL.spawn("VerticalLine", i * unitWidth, 0);
         }
     }
 
