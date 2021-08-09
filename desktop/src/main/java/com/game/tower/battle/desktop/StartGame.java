@@ -71,6 +71,7 @@ public class StartGame extends GameApplication implements ApplicationRunner {
     private Point2D enemySpawnPoint = new Point2D(50, 0);
 
     private List<Point2D> waypoints = new ArrayList<>();
+    private GameMapManage gameMapManage;
 
     public List<Point2D> getWaypoints() {
         return new ArrayList<>(waypoints);
@@ -102,19 +103,13 @@ public class StartGame extends GameApplication implements ApplicationRunner {
     protected void initGame() {
         getGameWorld().addEntityFactory(new GameEntityFactory());
 
-        FXGL.spawn("background");
-
         config = new GameMapConfig();
         config.setWidth(width);
         config.setHeight(height);
         config.setUnitHeight(30);
         config.setUnitWidth(30);
-        for (int i = 1; i < config.getHeight() / config.getUnitHeight() + 1; i++) {
-            FXGL.spawn("HorizontalLine", 0, i * config.getUnitHeight());
-        }
-        for (int i = 1; i < config.getWidth() / config.getUnitWidth() + 1; i++) {
-            FXGL.spawn("VerticalLine", i * config.getUnitWidth(), 0);
-        }
+        gameMapManage = new GameMapManage(config);
+        gameMapManage.init();
 
         // TODO: read this from external level data
         waypoints.addAll(Arrays.asList(
@@ -179,15 +174,9 @@ public class StartGame extends GameApplication implements ApplicationRunner {
             @Override
             protected void onActionBegin() {
                 if (worldBounds.contains(input.getMousePositionWorld())) {
-                    placeTower();
+                    gameMapManage.placeTower();
                 }
             }
         }, MouseButton.PRIMARY);
-    }
-
-    private void placeTower() {
-        spawn("Tower",
-                new SpawnData(getInput().getMouseXWorld(), getInput().getMouseYWorld()).put("tower", "arrow_tower.png")
-        );
     }
 }

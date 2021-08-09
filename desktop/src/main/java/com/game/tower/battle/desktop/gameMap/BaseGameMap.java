@@ -66,4 +66,10 @@ public abstract class BaseGameMap {
     protected String getMapPosition(final int x, final int y) {
         return x / unitWidth + "::" + y / unitHeight;
     }
+
+    public Position getCenterPosition(final double x, final double y) {
+        final double posX = (int) (x / unitWidth) * unitWidth + unitWidth / 2.0;
+        final double posY = (int) (y / unitHeight) * unitHeight + unitHeight / 2.0;
+        return new Position(posX, posY);
+    }
 }

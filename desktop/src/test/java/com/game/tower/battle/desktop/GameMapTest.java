@@ -21,6 +21,7 @@ import com.game.tower.battle.desktop.entity.EntityTypeEnum;
 import com.game.tower.battle.desktop.gameMap.BaseGameMap;
 import com.game.tower.battle.desktop.gameMap.GameMapConfig;
 import com.game.tower.battle.desktop.gameMap.GameMapManage;
+import com.game.tower.battle.desktop.gameMap.Position;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -75,5 +76,16 @@ public class GameMapTest {
 
         gameMap.destroyEntity(25, 25);
         Assertions.assertNull(gameMap.getEntity(0, 0));
+    }
+
+    @Test
+    public void getCenterPosition() {
+        Position position = gameMap.getCenterPosition(0, 0);
+        Assertions.assertEquals(15.0, position.getX());
+        Assertions.assertEquals(15.0, position.getY());
+
+        position = gameMap.getCenterPosition(30, 15);
+        Assertions.assertEquals(45.0, position.getX());
+        Assertions.assertEquals(15.0, position.getY());
     }
 }

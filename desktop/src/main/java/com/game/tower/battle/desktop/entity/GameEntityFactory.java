@@ -54,14 +54,14 @@ public class GameEntityFactory implements EntityFactory {
     @Spawns(value = "HorizontalLine")
     public Entity createHorizontalLine(final SpawnData data) {
         return entityBuilder(data)
-                .view(new Rectangle(getAppWidth(), 3, Color.WHITE))
+                .view(new Rectangle(getAppWidth(), 1, Color.WHITE))
                 .build();
     }
 
     @Spawns(value = "VerticalLine")
     public Entity createVerticalLine(final SpawnData data) {
         return entityBuilder(data)
-                .view(new Rectangle(3, getAppHeight(), Color.WHITE))
+                .view(new Rectangle(1, getAppHeight(), Color.WHITE))
                 .build();
     }
 
