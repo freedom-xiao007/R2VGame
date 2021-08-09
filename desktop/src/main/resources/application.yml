@@ -1,6 +1,0 @@
-game:
-  map:
-    width: 500
-    height: 750
-    unitWidth: 30
-    unitHeight: 30
