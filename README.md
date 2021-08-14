@@ -16,3 +16,5 @@
 ### 素材
 - [游戏素材库](https://game-icons.net/)
 - [game-assets](https://itch.io/game-assets/tag-2d)
+- [开发素材 :: 2D 素材](https://indienova.com/resource/2d/p/2)
+- [itch.io](https://itch.io/game-assets/tag-2d)
